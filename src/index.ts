@@ -1,15 +1,19 @@
 import express, { Request, Response } from "express";
+import usuarioRoutes from "./routes/usuarioRoutes";
 
 const app = express();
 const PORT = 3000;
 
 // Middleware para parsear JSON
 app.use(express.json());
+app.use("/API", usuarioRoutes)
 
 // Ruta principal
 app.get("/", (req: Request, res: Response) => {
     res.send("¡Hola desde TypeScript con Express!");
 });
+
+
 
 // Iniciar el servidor
 app.listen(PORT, () => {
