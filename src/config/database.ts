@@ -1,6 +1,7 @@
 // src/config/database.ts
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import { Usuario } from "../models/Usuario";
 
 // Cargar las variables de entorno desde el archivo .env
 dotenv.config();
@@ -14,3 +15,4 @@ export const conectarDB = async () => {
         process.exit(1);
     }
 };
+

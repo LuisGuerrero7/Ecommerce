@@ -1,15 +1,14 @@
-import express , {Router} from "express"
-import { obtenerUsuarios,crearUsuario, eliminarUsuarios } from "../controllers/usuarioControllers"
-import { validarUsuario } from "../middleware/validarUsuario"
+// src/routes/usuarioRoutes.ts
+import { Router } from "express";
+import { getUsuarios, postUsuario, getUsuarioPorId, putUsuario, deleteUsuario } from "../controllers/usuarioControllers";
+import { validarUsuario } from "../middleware/validarUsuario";
 
-const router = Router()
+const router = Router();
 
-router.get("/usuarios", obtenerUsuarios)
-router.post("/usuarios", validarUsuario, crearUsuario)
-router.delete("/usuarios/:id", eliminarUsuarios)
+router.post("/usuarios", validarUsuario, postUsuario);   // Create
+router.get("/usuarios", getUsuarios);                    // Read All
+router.get("/usuarios/:id", getUsuarioPorId);            // Read by ID
+router.put("/usuarios/:id", putUsuario);                 // Update
+router.delete("/usuarios/:id", deleteUsuario);           // Delete
 
-
-
-export default router
-
-
+export default router;
