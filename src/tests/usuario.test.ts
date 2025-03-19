@@ -1,8 +1,12 @@
 // tests/usuario.test.ts
 import request from "supertest";
 import app from ".."; // Asegúrate de exportar `app` desde `index.ts`
+import mongoose from "mongoose";
 
 describe("Pruebas de la API de Usuarios", () => {
+    afterAll(async()=>{
+        await mongoose.connection.close()
+    })
     it("Debe crear un usuario con datos válidos", async () => {
         const response = await request(app)
             .post("/api/usuarios")
@@ -10,7 +14,8 @@ describe("Pruebas de la API de Usuarios", () => {
 
         expect(response.status).toBe(201);
         expect(response.body.nombre).toBe("Luis");
-    });
+        
+    },100000);
 
     it("Debe rechazar un usuario con nombre corto", async () => {
         const response = await request(app)
@@ -27,4 +32,8 @@ describe("Pruebas de la API de Usuarios", () => {
 
         expect(response.status).toBe(400);
     });
+    it("Debe de responder con 404 a una ruta no existente", async () => {
+        const response = await request(app).get("/ruta-inexistente")
+        expect(response.status).toBe(404)
+    })
 });

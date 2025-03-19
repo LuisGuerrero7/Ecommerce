@@ -1,18 +1,16 @@
-// src/config/database.ts
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import { Usuario } from "../models/Usuario";
 
-// Cargar las variables de entorno desde el archivo .env
-dotenv.config();
+dotenv.config(); // Carga las variables de entorno desde .env
+
+const MONGO_URI = process.env.MONGO_URI as string; // Forzamos que es un string
 
 export const conectarDB = async () => {
     try {
-        await mongoose.connect(process.env.MONGO_URI as string);
-        console.log("Conectado a la base de datos");
+        await mongoose.connect(MONGO_URI);
+        console.log("✅ Conectado a la base de datos en MongoDB Atlas");
     } catch (error) {
-        console.error("Error conectando a la base de datos", error);
+        console.error("❌ Error conectando a la base de datos:", error);
         process.exit(1);
     }
 };
-
