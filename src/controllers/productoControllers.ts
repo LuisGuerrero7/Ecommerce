@@ -35,7 +35,6 @@ export const getProductoPorId: RequestHandler<RequestParams> = async (req, res):
 };
 
 // ✅ POST CREAR PRODUCTO
-// ✅ POST CREAR PRODUCTO
 export const postProducto: RequestHandler = async (req, res): Promise<void> => {
     try {
         const { nombre, precio, stock, descripcion, categoria } = req.body;

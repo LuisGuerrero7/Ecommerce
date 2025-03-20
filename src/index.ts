@@ -1,4 +1,4 @@
-import express from "express";
+import express from "express"; 
 import dotenv from "dotenv";
 import { conectarDB } from "./config/database";
 
@@ -8,8 +8,17 @@ const PORT = process.env.PORT || 3000;
 
 // Middleware y rutas
 app.use(express.json());
+
 import usuarioRoutes from "./routes/usuarioRoutes";
+import productoRoutes from "./routes/productoRoutes";
+
 app.use("/api", usuarioRoutes);
+app.use("/api", productoRoutes);
+
+// Ruta raíz para verificar el estado de la API
+app.get("/", (req, res) => {
+    res.send("API funcionando correctamente 🚀");
+});
 
 // Conectar a la base de datos
 conectarDB();
