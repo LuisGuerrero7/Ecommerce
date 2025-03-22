@@ -1,16 +1,28 @@
 import express, {Request,Response, RequestHandler} from "express"
 import { crearUsuario, obtenerUsuarios, obtenerUsuariosPorId, eliminarUsuario, actualizarUsuario } from "../services/usuarioService"
+import { z } from "zod"
+import { usuarioSchema } from "../schema/usuarioSchema";
 
 interface RequestParams {
     id: string
 }
 
-
 //GET, OBTENER USUARIOS
-export const getUsuarios = async (req: Request, res: Response) => {
-    const usuarios = await obtenerUsuarios()
-    res.json(usuarios)
-}
+export const getUsuarios: RequestHandler = async (req, res) => {
+    try {
+        const usuarios = await obtenerUsuarios();
+        if (usuarios.length === 0) {
+            res.status(404).json({ mensaje: "No hay usuarios registrados" });
+            return;
+        }
+        res.status(200).json(usuarios);
+        return;
+    } catch (error) {
+        console.error("Error al obtener usuarios:", error);
+        res.status(500).json({ mensaje: "Error en el servidor" });
+        return;
+    }
+};
 
 //GET X ID
 export const getUsuarioPorId: RequestHandler<RequestParams> = async (req, res) => {
@@ -21,17 +33,32 @@ export const getUsuarioPorId: RequestHandler<RequestParams> = async (req, res) =
             return;
         }
         res.json(usuario);
+        return;
     } catch (error) {
         res.status(500).json({ mensaje: "Error al obtener el usuario", error });
+        return;
     }
 };
 
 //POST 
-export const postUsuario = async (req: Request, res: Response) => {
-    const {nombre, edad} = req.body
-    const usuario = await crearUsuario(nombre, edad)
-    res.status(201).json(usuario)
-}
+export const postUsuario: RequestHandler = async (req, res) => {
+    try {
+        const validacion = usuarioSchema.safeParse(req.body);
+        if (!validacion.success) {
+            res.status(400).json({ errores: validacion.error.errors });
+            return;
+        }
+
+        const { nombre, edad, correo } = validacion.data;
+        const usuario = await crearUsuario(nombre, edad);
+        res.status(201).json(usuario);
+        return;
+    } catch (error) {
+        console.error("Error al crear usuario:", error);
+        res.status(500).json({ mensaje: "Error en el servidor" });
+        return;
+    }
+};
 
 
 //PUT, CREAR USUARIOS
@@ -43,8 +70,10 @@ export const putUsuario: RequestHandler<RequestParams> = async (req, res) => {
             return;
         }
         res.json(usuario);
+        return;
     } catch (error) {
         res.status(500).json({ mensaje: "Error al actualizar el usuario", error });
+        return;
     }
 };
 
@@ -57,7 +86,10 @@ export const deleteUsuario: RequestHandler<RequestParams> = async (req, res) => 
             return;
         }
         res.json({ mensaje: "Usuario eliminado" });
+        return;
     } catch (error) {
-        res.status(500).json({ mensaje: "Error al eliminar el usuario", error });
+        console.log("Error al eliminar usuario", error)
+        res.status(500).json({ mensaje: "Error al eliminar el usuario"});
+        return;
     }
 };
