@@ -1,6 +1,6 @@
 import { Schema, model, Document } from "mongoose";
 
-interface IUsuario extends Document {
+export interface IUsuario extends Document {
     nombre: string;
     edad: number;
     activo: boolean;
