@@ -1,20 +1,22 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response, NextFunction, RequestHandler } from "express";
 import jwt from "jsonwebtoken";
 
-export const manejoAutorizacion = (req: Request, res: Response, next: NextFunction) => {
-    const authHeader = req.headers.authorization;
+// Hacemos que sea genérica, usando "any" para compatibilidad con rutas que usan parámetros como :id
+export const manejoAutorizacion: RequestHandler<any> = (req, res, next) => {
+  const authHeader = req.headers.authorization;
 
-    if (!authHeader || !authHeader.startsWith("Bearer ")) {
-        return res.status(401).json({ mensaje: "Token no proporcionado" });
-    }
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    res.status(401).json({ mensaje: "Token no proporcionado" });
+    return;
+  }
 
-    const token = authHeader.split(" ")[1];
+  const token = authHeader.split(" ")[1];
 
-    try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET!);
-        (req as any).usuario = decoded;
-        next();
-    } catch (err) {
-        return res.status(403).json({ mensaje: "Token inválido" });
-    }
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET!);
+    (req as any).usuario = decoded;
+    next();
+  } catch (err) {
+    res.status(401).json({ mensaje: "Token inválido" });
+  }
 };
