@@ -29,7 +29,7 @@ export const register: RequestHandler = async (req, res) => {
 
         await nuevoUsuario.save();
 
-        res.status(201).json({ mensaje: "Usuario creado exitosamente" });
+        res.status(201).json({ mensaje: "Usuario creado exitosamente", usuario: nuevoUsuario });
         return;
     } catch (error) {
         res.status(500).json({ mensaje: "Error al registrar usuario", error });

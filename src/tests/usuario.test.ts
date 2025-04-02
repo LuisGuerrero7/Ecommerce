@@ -8,12 +8,14 @@ describe("Pruebas de la API de Usuarios", () => {
     });
 
     it("Debe crear un usuario con datos válidos", async () => {
+        const correo = `test-${Date.now()}@email.com`;
+
         const response = await request(app)
-            .post("/api/usuarios")
-            .send({ nombre: "Luis", edad: 25, correo: "luis@test.com" });
+            .post("/api/register")
+            .send({ nombre: "Luis", edad: 25, correo, password: "123456"});
 
         expect(response.status).toBe(201);
-        expect(response.body.nombre).toBe("Luis");
+        expect(response.body.usuario.nombre).toBe("Luis");
     });
 
     it("Debe rechazar un usuario con nombre corto", async () => {
