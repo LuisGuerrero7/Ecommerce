@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 
 dotenv.config(); // Carga las variables de entorno desde .env
 
-const MONGO_URI = process.env.MONGO_URI as string; // Forzamos que es un string
+const MONGO_URI = process.env.MONGO_URI as string; 
 
 export const conectarDB = async () => {
     try {

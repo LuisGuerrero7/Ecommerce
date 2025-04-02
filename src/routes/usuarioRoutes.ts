@@ -8,8 +8,8 @@ import { manejoAutorizacion } from "../auth/authMiddleware";
 const router = Router();
 
 router.post("/usuarios", validarDatos(usuarioSchema), postUsuario);   // Create
-router.get("/usuarios", getUsuarios);                    // Read All
-router.get("/usuarios/:id", getUsuarioPorId);            // Read by ID
+router.get("/usuarios",manejoAutorizacion,  getUsuarios);                    // Read All
+router.get("/usuarios/:id",manejoAutorizacion, getUsuarioPorId);            // Read by ID
 router.put("/usuarios/:id", manejoAutorizacion, putUsuario);                 // Update
 router.delete("/usuarios/:id", manejoAutorizacion,deleteUsuario);           // Delete
 

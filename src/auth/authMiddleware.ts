@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction, RequestHandler } from "express";
 import jwt from "jsonwebtoken";
 
-// Hacemos que sea genérica, usando "any" para compatibilidad con rutas que usan parámetros como :id
 export const manejoAutorizacion: RequestHandler<any> = (req, res, next) => {
   const authHeader = req.headers.authorization;
 
@@ -14,9 +13,9 @@ export const manejoAutorizacion: RequestHandler<any> = (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET!);
-    (req as any).usuario = decoded;
+    (req as any).usuario = decoded; // Puedes guardar el usuario para usarlo después
     next();
   } catch (err) {
-    res.status(401).json({ mensaje: "Token inválido" });
+    res.status(401).json({ mensaje: "Token inválido o expirado" });
   }
 };
