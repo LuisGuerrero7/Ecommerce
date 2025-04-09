@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { obtenerProductos, Producto } from "../services/productService";
 
 export default function ProductList() {
@@ -28,12 +29,14 @@ export default function ProductList() {
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-4">
       {productos.map((producto) => (
         <div key={producto.id} className="border p-4 rounded-lg shadow">
-          <img
-            src={producto.image}
-            alt={producto.title}
-            className="h-40 mx-auto mb-4"
-          />
-          <h2 className="text-lg font-semibold">{producto.title}</h2>
+          <Link to={`/producto/${producto.id}`}>
+            <img
+              src={producto.image}
+              alt={producto.title}
+              className="h-40 mx-auto mb-4"
+            />
+            <h2 className="text-lg font-semibold">{producto.title}</h2>
+          </Link>
           <p className="text-gray-600">${producto.price}</p>
         </div>
       ))}

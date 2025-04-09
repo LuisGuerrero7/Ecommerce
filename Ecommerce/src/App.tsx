@@ -1,14 +1,15 @@
-import ProductList from './components/ProductList'
-import './App.css'
+// src/App.tsx
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import DetalleProducto from "./pages/DetalleProducto";
 
-function App() {
-
+export default function App() {
   return (
-    <div className="min-h-screen bg-gray-100">
-      <h1 className="text-3xl text-center font-bold py-8">Tienda Virtual</h1>
-      <ProductList />
-    </div>
-  )
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/producto/:id" element={<DetalleProducto />} />
+      </Routes>
+    </Router>
+  );
 }
-
-export default App
