@@ -17,7 +17,7 @@ const carritoSlice = createSlice({
             state.items.push(action.payload)
         },
         eliminarDelCarrito: (state, action: PayloadAction<number>) => {
-            state.items = state.items.filter((producto) => producto.id !== action.payload)
+            state.items = state.items.filter(item => item.id !== action.payload);
         },
         vaciarCarrito: (state) => {
             state.items = []
