@@ -1,3 +1,4 @@
+// src/pages/DetalleProducto.tsx
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Producto } from "../services/productService";
@@ -24,7 +25,13 @@ export default function DetalleProducto() {
   }
 
   const handleAgregarAlCarrito = () => {
-    dispatch(agregarAlCarrito(producto)); //
+    dispatch(
+      agregarAlCarrito({
+        id: producto.id,
+        title: producto.title,
+        price: producto.price,
+      })
+    );
   };
 
   return (
