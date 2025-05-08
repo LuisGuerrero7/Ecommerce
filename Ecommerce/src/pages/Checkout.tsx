@@ -59,6 +59,7 @@ export default function Checkout() {
         <button type="submit" className="bg-green-500 text-white px-4 py-2 rounded">
           Confirmar pedido
         </button>
+
       </form>
 
       <h2 className="text-xl mt-6 mb-2">Resumen</h2>

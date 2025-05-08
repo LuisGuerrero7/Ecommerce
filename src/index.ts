@@ -18,6 +18,9 @@ app.use("/api", productoRoutes);
 import authRoutes from "./auth/authRoutes";
 app.use("/api", authRoutes);
 
+import checkoutRoutes from "./routes/checkoutRoutes";
+app.use("/api", checkoutRoutes)
+
 // Ruta raíz para verificar el estado de la API
 app.get("/", (req, res) => {
     res.send("API funcionando correctamente 🚀");
